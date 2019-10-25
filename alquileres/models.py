@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -12,18 +13,18 @@ class Property(models.Model):
     address = models.CharField(max_length=50)
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
-    daily_price = models.DecimalField()
+    daily_price = models.DecimalField(max_digits=13, decimal_places=2)
     image = models.CharField(max_length=200)
-    max_pax = models.DecimalField()
+    max_pax = models.IntegerField()
     city = models.ForeignKey(City, on_delete=models.CASCADE)
 
 
-class Host(models.User):
+class Host(User):
     pass
 
 
 class Reservation(models.Model):
-    total_price = models.DecimalField()
+    total_price = models.DecimalField(max_digits=3, decimal_places=2)
     created_date = models.DateTimeField()
 
 
