@@ -4,3 +4,4 @@
 alquileres/__pycache__/
 alquileres/migrations/__pycache__/
 tp_alquiler_propiedades/__pycache__/
+db.sqlite3
