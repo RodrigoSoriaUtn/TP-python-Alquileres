@@ -1,0 +1,6 @@
+
+# Default ignored files
+/workspace.xml
+.idea/
+alquileres/__pycache__/
+tp_alquiler_propiedades/__pycache__/
