@@ -5,7 +5,7 @@ from .models import Property
 # Create your views here.
 
 def index(request):
-    property_list = Property.objects[:5]
+    property_list = Property.objects.all()
     template = loader.get_template('alquileres/index.html')
     context = {
         'property_list' : property_list
