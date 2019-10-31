@@ -3,7 +3,7 @@
 
 </head>
 <nav class="row navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class=" col-9 navbar-brand" href="#">Rentals</a>
+  <a class=" col-9 navbar-brand font-weight-bold" href="#">Rentals</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -14,8 +14,33 @@
   </div>
 </nav>
 <ul>
-<h3> Propiedades para alquilar :  </h3>
-<div class="row">
+<h3 class="font-weight-bold"> Propiedades para alquilar :  </h3>
+        {% for property in property_list %}
+
+    <div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4" >
+      <img src="https://via.placeholder.com/150" class="card-img" alt="..." height="150">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body row">
+        <div class="col-6">
+        <h5 class="card-title">Title: {{property.title}}</h5>
+        <p class="card-text">Description: {{property.description}}</p>
+        <p class="card-text">Address: {{property.address}}</p>
+        </div>
+        <div class="col-6">
+          <p class="text-right">Max Pax: {{property.max_pax}}</p>
+          <p class="text-right">City: {{property.city}}</p>
+           <p class="text-right" ><a href="/property/{{ property.id }}/">View Property</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+    <!--<div class="row">
     <table class="table col-8">
       <thead class="thead-dark">
         <tr>
@@ -40,5 +65,6 @@
         {% endfor %}
       </tbody>
     </table>
-</div>
+
+</div>-->
 </ul>
