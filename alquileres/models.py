@@ -20,7 +20,7 @@ class Property(models.Model):
     image = models.CharField(max_length=200)
     max_pax = models.IntegerField()
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    host = models.ForeignKey(Host, on_delete=models.CASCADE, null=True)
+    host = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
