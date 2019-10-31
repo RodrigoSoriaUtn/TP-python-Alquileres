@@ -9,6 +9,8 @@ class City(models.Model):
     def __str__(self):
         return self.name
 
+class Host(User):
+    pass
 
 class Property(models.Model):
     address = models.CharField(max_length=50)
@@ -18,14 +20,10 @@ class Property(models.Model):
     image = models.CharField(max_length=200)
     max_pax = models.IntegerField()
     city = models.ForeignKey(City, on_delete=models.CASCADE)
+    host = models.ForeignKey(Host, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
-
-
-class Host(User):
-    pass
-
 
 class Reservation(models.Model):
     total_price = models.DecimalField(max_digits=3, decimal_places=2)
