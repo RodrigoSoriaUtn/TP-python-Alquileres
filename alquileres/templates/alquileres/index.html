@@ -1,7 +1,44 @@
-<h3> Propiedades para alquilar :  </h3>
-<ul>
-{% for property in property_list %}
-    <li><a href="/property/{{ property.id }}/">{{ property.title }}</a></li>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-{% endfor %}
+</head>
+<nav class="row navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class=" col-9 navbar-brand" href="#">Rentals</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <form class="form-inline my-2 my-lg-2 col-3">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+<ul>
+<h3> Propiedades para alquilar :  </h3>
+<div class="row">
+    <table class="table col-8">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Address</th>
+          <th scope="col">Description</th>
+          <th scope="col">Max Pax</th>
+          <th scope="col">City</th>
+          <th scope="col">Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for property in property_list %}
+        <tr>
+          <th scope="row">{{property.title}}</th>
+          <td>{{property.address}}</td>
+          <td>{{property.description}}</td>
+          <td>{{property.max_pax}}</td>
+          <td>{{property.city}}</td>
+           <td><a href="/property/{{ property.id }}/">View Property</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
 </ul>
