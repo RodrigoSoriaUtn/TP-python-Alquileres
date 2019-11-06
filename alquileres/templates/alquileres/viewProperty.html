@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/alquileres/styles.css">
+    <title>View Property</title>
+</head>
+<body>
+{% extends "alquileres/navBar.html" %}
+
+{% block content %}
+<div class="section-container">
+    <section class="property-section">
+        <div class="card mb-3">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnfyV7d_jLcatKSiL_twqZVd796c3bXhNYA70BBXP91SPK5ulF" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Title: {{property.title}}</h5>
+            <p class="card-text">Description: {{property.description}}</p>
+            <p class="card-text">Max Pax: {{property.max_pax}}</p>
+            <p class="card-text">Address: {{property.address}}</p>
+            <p class="text-right">City: {{property.city}}</p>
+
+        </div>
+    </section>
+    <aside class="property-aside">
+        <form>
+          <div class="form-group">
+            <input type="email" class="form-control font-weight-bold" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+            <div class="form-group">
+            <input type="text" class="form-control font-weight-bold" id="exampleInputName1" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control font-weight-bold" id="exampleInputPassword1" placeholder="Password">
+          </div>
+
+          <button type="submit" class="btn btn-primary font-weight-bold">Rent</button>
+        </form>
+    </aside>
+</div>
+</body>
+</html>
+{% endblock %}

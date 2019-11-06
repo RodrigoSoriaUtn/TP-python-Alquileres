@@ -1,0 +1,12 @@
+.section-container {
+    display: flex;
+}
+
+.property-section {
+    width: 50%;
+
+}
+.property-aside {
+    width: 40%;
+    padding: 20px;
+}

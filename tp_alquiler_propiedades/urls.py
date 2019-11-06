@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from alquileres import views
+
 urlpatterns = [
     path('rental', include('alquileres.urls')),
     path('admin/', admin.site.urls),
+    path('property/<int:property_id>/', views.viewProperty, name='viewProperty')
 ]
