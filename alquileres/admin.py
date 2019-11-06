@@ -35,3 +35,14 @@ class hostReservation(admin.ModelAdmin) :
         return Reservation.objects.filter(rentaldate__property__host=request.user)
 
 admin.site.register(Reservation, hostReservation)
+
+
+
+make reservation :
+    creates Reservation Object
+    sets reservation attributes
+    save Reservation
+    takes days ids.
+    set reservation FK to every day.
+    adds them to a array.
+    save days in one query.

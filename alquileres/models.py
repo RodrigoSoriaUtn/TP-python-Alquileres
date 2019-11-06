@@ -34,8 +34,11 @@ class Property(models.Model):
 
 class Reservation(models.Model):
     total_price = models.DecimalField(max_digits=3, decimal_places=2)
-    created_date = models.DateTimeField()
+    created_date = models.DateTimeField(auto_now_add=True)
 
+    def __init__(self, creation_date, total_cost) : 
+        self.created_date = creation_date
+        self.total_price = total_cost
 
 class RentalDate(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
