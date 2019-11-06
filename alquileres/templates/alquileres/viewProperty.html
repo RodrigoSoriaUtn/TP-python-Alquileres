@@ -14,14 +14,18 @@
     <section class="property-section">
         <div class="card mb-3">
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnfyV7d_jLcatKSiL_twqZVd796c3bXhNYA70BBXP91SPK5ulF" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Title: {{property.title}}</h5>
-            <p class="card-text">Description: {{property.description}}</p>
-            <p class="card-text">Max Pax: {{property.max_pax}}</p>
-            <p class="card-text">Address: {{property.address}}</p>
-            <p class="text-right">City: {{property.city}}</p>
-
-        </div>
+          <div class="card-body row">
+            <div class="col-6">
+                <h5 class="card-title">Title: {{property.title}}</h5>
+                <p class="card-text">Description: {{property.description}}</p>
+                <p class="card-text">Max Pax: {{property.max_pax}}</p>
+            </div>
+             <div class="col-6">
+                <p class="text-right">Address: {{property.address}}</p>
+                <p class="text-right">City: {{property.city}}</p>
+                <p class="text-right">Daily Price: {{property.daily_price}}</p>
+            </div>
+            </div>
         </div>
     </section>
     <aside class="property-aside">
