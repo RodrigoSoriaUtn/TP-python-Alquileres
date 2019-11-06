@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from .models import Reservation, City, Property, RentalDate, Host
 
-admin.site.register({Reservation, City, RentalDate, Host})
+admin.site.register({City, Host})
 
 class hostProperty(admin.ModelAdmin) :
 
@@ -16,3 +16,22 @@ class hostProperty(admin.ModelAdmin) :
         super(hostProperty, self).save_model(request, obj, form, change)
 
 admin.site.register(Property, hostProperty)
+
+
+class hostRentalDates(admin.ModelAdmin) :
+    
+    exclude = ['reservation']
+
+    def get_queryset(self, request) : 
+        return RentalDate.objects.filter(property__host=request.user)
+
+
+admin.site.register(RentalDate, hostRentalDates)
+
+
+class hostReservation(admin.ModelAdmin) :
+
+    def get_queryset(self, request) :
+        return Reservation.objects.filter(rentaldate__property__host=request.user)
+
+admin.site.register(Reservation, hostReservation)

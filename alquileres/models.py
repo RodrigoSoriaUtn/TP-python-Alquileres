@@ -39,8 +39,8 @@ class Reservation(models.Model):
 
 class RentalDate(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, null=True)
     date = models.DateField()
 
     def __str__(self):
-        return self.date
+        return self.date.strftime('%d/%m/%Y')
