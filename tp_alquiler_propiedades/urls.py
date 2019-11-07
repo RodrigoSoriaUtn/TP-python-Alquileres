@@ -22,7 +22,7 @@ admin.site.site_title="Rental admin"
 admin.site.index_title="Rental admin control panel"
 
 urlpatterns = [
-    path('rental', include('alquileres.urls')),
+    path('', include('alquileres.urls')),
     path('admin/', admin.site.urls),
     path('property/<int:property_id>/', views.viewProperty, name='viewProperty')
 ]
