@@ -1,4 +1,5 @@
 from datetime import date
+from django.http import Http404
 from django.shortcuts import render, HttpResponse
 from django.template import loader
 from .models import Property, Reservation, RentalDate
@@ -13,15 +14,24 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-def propertyToRent(request, propertyId) :
-    prop : Property = Property.objects.get(id=propertyId)
-    if (request.method == 'POST') :
-        makeReservation(request, prop)
-
+def viewProperty(request, property_id):
+    try:
+        prop = Property.objects.get(pk=property_id)
+        if (request.method == 'POST') :
+            makeReservation(request, prop)
+    except Property.DoesNotExist:
+        raise Http404("Property does not exist")
     return loadPropertyView(request, prop)
+
+def loadPropertyView(request, prop) :
+    rentalDays = RentalDate.objects.filter(property=prop)
+    context = {
+        'property' : prop,
+        'rentableDays' : rentalDays
+    }
+    return render(request, 'alquileres/viewProperty.html', context)
     
 def makeReservation(request, prop) :
-    # TODO : Surround by try except block. Ask why.
     if (request.POST['daysToRent']) : 
         daysIds = request.POST['daysToRent']
         rentalDates = RentalDate.objects.filter(pk__in=daysIds).filter(property__equals=prop)
@@ -32,13 +42,3 @@ def makeReservation(request, prop) :
         for rentalDate in rentalDates :
             rentalDate.reservation = reservation
             rentalDate.save()
-
-def loadPropertyView(request, prop) :
-    # TODO : Change this. Verify with marcus.
-    rentalDays = RentalDate.objects.filter(property=prop)
-    template = loader.get_template('alquleres/index.html')
-    context = {
-        'property' : prop,
-        'rentableDays' : rentalDays
-    }
-    return HttpResponse(template.render(context, request))

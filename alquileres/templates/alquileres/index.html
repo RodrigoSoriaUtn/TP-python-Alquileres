@@ -1,7 +1,35 @@
-<h3> Propiedades para alquilar :  </h3>
-<ul>
-{% for property in property_list %}
-    <li><a href="/property/{{ property.id }}/">{{ property.title }}</a></li>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Rentals</title>
+</head>
+{% extends "alquileres/navBar.html" %}
 
+{% block content %}
+<ul>
+<h3 class="font-weight-bold"> Propiedades para alquilar :  </h3>
+        {% for property in property_list %}
+
+    <div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4" >
+      <img src="https://realestatevietnam.com.vn/wp-content/uploads/2018/01/2-storey-house-150x150.jpg" class="card-img" alt="..." height="150">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body row">
+        <div class="col-6">
+        <h5 class="card-title">Title: {{property.title}}</h5>
+        <p class="card-text">Description: {{property.description}}</p>
+        <p class="card-text">Address: {{property.address}}</p>
+        </div>
+        <div class="col-6">
+          <p class="text-right">Max Pax: {{property.max_pax}}</p>
+          <p class="text-right">City: {{property.city}}</p>
+           <p class="text-right" ><a href="/property/{{ property.id }}/">View Property</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endfor %}
 </ul>
+{% endblock %}
