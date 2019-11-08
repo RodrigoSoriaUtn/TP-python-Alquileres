@@ -5,7 +5,14 @@ from .models import Reservation, City, Property, RentalDate, Host
 
 admin.site.register({City, Host})
 
+class RentalDateInline(admin.TabularInline) :
+    model = RentalDate
+
 class hostProperty(admin.ModelAdmin) :
+
+    inlines = [
+        RentalDateInline
+    ]
 
     def get_queryset(self, request) :
         return Property.objects.filter(host=request.user)

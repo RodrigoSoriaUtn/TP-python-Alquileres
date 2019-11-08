@@ -2,6 +2,6 @@
 /workspace.xml
 .idea/
 alquileres/__pycache__/
-alquileres/migrations/__pycache__/
+alquileres/migrations
 tp_alquiler_propiedades/__pycache__/
 db.sqlite3
