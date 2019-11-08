@@ -17,11 +17,9 @@ def index(request):
 def viewProperty(request, property_id):
     try:
         prop = Property.objects.get(pk=property_id)
-        if (request.method == 'POST') :
-            makeReservation(request, prop)
+        return loadPropertyView(request, prop)
     except Property.DoesNotExist:
         raise Http404("Property does not exist")
-    return loadPropertyView(request, prop)
 
 def loadPropertyView(request, prop) :
     rentalDays = RentalDate.objects.filter(property=prop)
@@ -31,6 +29,21 @@ def loadPropertyView(request, prop) :
     }
     return render(request, 'alquileres/viewProperty.html', context)
     
+
+
+
+
+
+
+
+def saveProperty(request, prop) :
+    try:
+        prop = Property.objects.get(pk=property_id)
+        if (request.method == 'POST') :
+            makeReservation(request, prop)
+    except Property.DoesNotExist:
+        raise Http404("Property does not exist")
+
 def makeReservation(request, prop) :
     if (request.POST['daysToRent']) : 
         daysIds = request.POST['daysToRent']
@@ -42,3 +55,4 @@ def makeReservation(request, prop) :
         for rentalDate in rentalDates :
             rentalDate.reservation = reservation
             rentalDate.save()
+
