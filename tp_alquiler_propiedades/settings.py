@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
 ]
 
-AUTH_USER_MODEL='alquileres.Host'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -94,9 +93,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',

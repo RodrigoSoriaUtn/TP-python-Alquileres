@@ -7,6 +7,7 @@ admin.site.register({City, Host})
 
 class RentalDateInline(admin.TabularInline) :
     model = RentalDate
+    exclude = ['reservation']
 
 class hostProperty(admin.ModelAdmin) :
 
@@ -14,27 +15,24 @@ class hostProperty(admin.ModelAdmin) :
         RentalDateInline
     ]
 
+    def get_exclude(self, request, obj) :
+        if (not request.user.is_superuser) :
+            return ['host'] 
+        else :
+            return []
+
     def get_queryset(self, request) :
-        return Property.objects.filter(host=request.user)
+        if (not request.user.is_superuser) :
+            return Property.objects.filter(host=request.user)
+        else :
+            return Property.objects.all()
 
     def save_model(self, request, obj, form, change):
-        if not obj.pk :
-            obj.host = request.user
+        if (not obj.pk and not request.user.is_superuser ) :
+            obj.host = Host.objects.get(pk=request.user) 
         super(hostProperty, self).save_model(request, obj, form, change)
 
 admin.site.register(Property, hostProperty)
-
-
-class hostRentalDates(admin.ModelAdmin) :
-    
-    exclude = ['reservation']
-
-    def get_queryset(self, request) : 
-        return RentalDate.objects.filter(property__host=request.user)
-
-
-admin.site.register(RentalDate, hostRentalDates)
-
 
 class hostReservation(admin.ModelAdmin) :
 

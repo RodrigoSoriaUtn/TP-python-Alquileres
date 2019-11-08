@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.conf import settings
 
 
@@ -13,8 +13,11 @@ class City(models.Model):
     def __str__(self):
         return self.name
 
-class Host(AbstractUser):
+class Host(User):
     pass
+
+    class Meta :
+        verbose_name_plural = "Hosts"
 
 class Property(models.Model):
     address = models.CharField(max_length=50)
@@ -24,7 +27,7 @@ class Property(models.Model):
     image = models.CharField(max_length=200)
     max_pax = models.IntegerField()
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    host = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    host = models.ForeignKey(Host, on_delete=models.CASCADE, null=True)
 
     class Meta : 
         verbose_name_plural = "Properties"
