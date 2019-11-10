@@ -2,6 +2,7 @@ from datetime import date
 from django.http import Http404
 from django.shortcuts import render, HttpResponse
 from django.template import loader
+from .forms import ReservationForm
 from .models import Property, Reservation, RentalDate
 
 # Create your views here.
@@ -17,15 +18,20 @@ def index(request):
 def viewProperty(request, property_id):
     try:
         prop = Property.objects.get(pk=property_id)
+        if (request.method == 'POST') :
+            makeReservation(request, prop)
         return loadPropertyView(request, prop)
     except Property.DoesNotExist:
         raise Http404("Property does not exist")
 
 def loadPropertyView(request, prop) :
     rentalDays = RentalDate.objects.filter(property=prop)
+    resForm = ReservationForm()
+    resForm.setRentableDays(rentalDays)
     context = {
         'property' : prop,
-        'rentableDays' : rentalDays
+        'rentableDays' : rentalDays,
+        'reservationForm' : resForm
     }
     return render(request, 'alquileres/viewProperty.html', context)
     
@@ -36,13 +42,13 @@ def loadPropertyView(request, prop) :
 
 
 
-def saveProperty(request, prop) :
+def saveReservation(request, prop_id) :
     try:
-        prop = Property.objects.get(pk=property_id)
-        if (request.method == 'POST') :
-            makeReservation(request, prop)
-    except Property.DoesNotExist:
+        prop = Property.objects.get_object_or_404(pk=prop_id)
+        
+    except : # TODO : What should we catch in the except ¿?
         raise Http404("Property does not exist")
+    
 
 def makeReservation(request, prop) :
     if (request.POST['daysToRent']) : 
