@@ -31,7 +31,7 @@
     </section>
     <aside class="property-aside">
       <label class="font-weight-bold"> Make a reservation!</label>
-      <form>
+      <form method='POST'>
         {% csrf_token %}
 
         <div class="form-group">
@@ -53,6 +53,20 @@
         <button type="submit" class="btn btn-primary font-weight-bold">Make the reservation!</button>
       </form>
 
+      {% if reservationForm.errors %}
+        {% for field in reservationForm %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger custom-error">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in reservationForm.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
     </aside>
 </div>
 <div>

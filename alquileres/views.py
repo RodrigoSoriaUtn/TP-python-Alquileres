@@ -1,6 +1,6 @@
-from datetime import date
+import datetime
 from django.http import Http404
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.template import loader
 from .forms import ReservationForm
 from .models import Property, Reservation, RentalDate
@@ -16,49 +16,54 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def viewProperty(request, property_id):
+    reservationForm = ReservationForm()
     try:
-        prop = Property.objects.get(pk=property_id)
+        prop = get_object_or_404(Property, pk=property_id)
         if (request.method == 'POST') :
-            makeReservation(request, prop)
-        return loadPropertyView(request, prop)
-    except Property.DoesNotExist:
-        raise Http404("Property does not exist")
+            reservationForm = ReservationForm(request.POST)
 
-def loadPropertyView(request, prop) :
+            if reservationForm.is_valid() :
+                reservation = makeReservation(reservationForm, prop)
+                return loadPropertyView(request, prop, reservation.pk)
+
+    except Exception as inst :
+        reservationForm.add_error(None, inst)
+
+    return loadPropertyView(request, prop, reservationForm)
+
+def loadPropertyView(request, prop, resForm, reservationID=None) :
     rentalDays = RentalDate.objects.filter(property=prop)
-    resForm = ReservationForm()
-    resForm.setRentableDays(rentalDays)
     context = {
         'property' : prop,
         'rentableDays' : rentalDays,
-        'reservationForm' : resForm
+        'reservationForm' : resForm,
+        'reservationId' : reservationID
     }
     return render(request, 'alquileres/viewProperty.html', context)
-    
 
-
-
-
-
-
-
-def saveReservation(request, prop_id) :
-    try:
-        prop = Property.objects.get_object_or_404(pk=prop_id)
+def makeReservation(reservationForm, prop) :
         
-    except : # TODO : What should we catch in the except ¿?
-        raise Http404("Property does not exist")
+    name = reservationForm.cleaned_data['name']
+    surname = reservationForm.cleaned_data['surname']
+    email = reservationForm.cleaned_data['email']
     
+    startDate = reservationForm.start_date
+    endDate = reservationForm.end_date
+    delta = endDate - startDate
+    daysChosen = []
+    for i in range(delta.days+1) :
+        daysChosen.append(startDate + datetime.timedelta(days=i))
 
-def makeReservation(request, prop) :
-    if (request.POST['daysToRent']) : 
-        daysIds = request.POST['daysToRent']
-        rentalDates = RentalDate.objects.filter(pk__in=daysIds).filter(property__equals=prop)
-        
-        reservation = Reservation(date.today, prop.daily_price * rentalDates.len())
-        reservation.save()
+    rentalDates = RentalDate.objects.filter(date__in=daysChosen).filter(property__equals=prop)
+    
+    if (len(daysChosen) > len(rentalDates)) :
+        raise Exception('The dates selected are not available, you can choose the following dates : ') 
 
-        for rentalDate in rentalDates :
-            rentalDate.reservation = reservation
-            rentalDate.save()
+    reservation = Reservation(name, surname, email, datetime.date.today, prop.daily_price * rentalDates.len())
+    reservation.save()
 
+    for rentalDate in rentalDates :
+        rentalDate.reservation = reservation
+        rentalDate.save()
+    
+    return reservation
