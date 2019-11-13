@@ -53,20 +53,22 @@
         <button type="submit" class="btn btn-primary font-weight-bold">Make the reservation!</button>
       </form>
 
-      {% if reservationForm.errors %}
-        {% for field in reservationForm %}
+      <div class="property-error-section">
+        {% if reservationForm.errors %}
+          {% for field in reservationForm %}
             {% for error in field.errors %}
-                <div class="alert alert-danger custom-error">
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
-        {% endfor %}
-        {% for error in reservationForm.non_field_errors %}
-            <div class="alert alert-danger">
+              <div class="alert alert-danger custom-error">
                 <strong>{{ error|escape }}</strong>
+              </div>
+            {% endfor %}
+          {% endfor %}
+          {% for error in reservationForm.non_field_errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
             </div>
-        {% endfor %}
-    {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
     </aside>
 </div>
 <div>

@@ -17,17 +17,17 @@ def index(request):
 
 def viewProperty(request, property_id):
     reservationForm = ReservationForm()
-    try:
-        prop = get_object_or_404(Property, pk=property_id)
-        if (request.method == 'POST') :
-            reservationForm = ReservationForm(request.POST)
+    #try:
+    prop = get_object_or_404(Property, pk=property_id)
+    if (request.method == 'POST') :
+        reservationForm = ReservationForm(request.POST)
 
-            if reservationForm.is_valid() :
-                reservation = makeReservation(reservationForm, prop)
-                return loadPropertyView(request, prop, reservation.pk)
+        if reservationForm.is_valid() :
+            reservation = makeReservation(reservationForm, prop)
+            return loadPropertyView(request, prop, reservation.pk)
 
-    except Exception as inst :
-        reservationForm.add_error(None, inst)
+    #except Exception as inst :
+    #   reservationForm.add_error(None, inst)
 
     return loadPropertyView(request, prop, reservationForm)
 
@@ -47,16 +47,13 @@ def makeReservation(reservationForm, prop) :
     surname = reservationForm.cleaned_data['surname']
     email = reservationForm.cleaned_data['email']
     
-    startDate = reservationForm.start_date
-    endDate = reservationForm.end_date
+    startDate = reservationForm.cleaned_data['start_date']
+    endDate = reservationForm.cleaned_data['end_date']
     delta = endDate - startDate
-    daysChosen = []
-    for i in range(delta.days+1) :
-        daysChosen.append(startDate + datetime.timedelta(days=i))
 
-    rentalDates = RentalDate.objects.filter(date__in=daysChosen).filter(property__equals=prop)
+    rentalDates = RentalDate.objects.filter(date__range=[startDate, endDate]).filter(property__equals=prop)
     
-    if (len(daysChosen) > len(rentalDates)) :
+    if ( (len(delta.days) + 1) > len(rentalDates) ) :
         raise Exception('The dates selected are not available, you can choose the following dates : ') 
 
     reservation = Reservation(name, surname, email, datetime.date.today, prop.daily_price * rentalDates.len())
