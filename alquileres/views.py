@@ -47,12 +47,7 @@ def makeReservation(reservationForm, prop) :
     surname = reservationForm.cleaned_data['surname']
     email = reservationForm.cleaned_data['email']
     
-    startDate = reservationForm.cleaned_data['start_date']
-    endDate = reservationForm.cleaned_data['end_date']
-    delta = endDate - startDate
-
-    rentalDates = RentalDate.objects.filter(date__range=[startDate, endDate]).filter(property__equals=prop)
-    
+   
     if ( (len(delta.days) + 1) > len(rentalDates) ) :
         raise Exception('The dates selected are not available, you can choose the following dates : ') 
 

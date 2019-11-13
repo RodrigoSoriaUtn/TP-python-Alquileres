@@ -10,72 +10,97 @@
 {% extends "alquileres/navBar.html" %}
 
 {% block content %}
+{% load my_tags %}
 {{ reservationForm.media }} {# Adds date-picker required JS and CSS of the reservation forms #}
-<div class="section-container">
-    <section class="property-section">
-        <div class="card mb-3">
-          <img src="{{property.image}}" class="card-img-top" alt="...">
-          <div class="card-body row">
-            <div class="col-6">
-                <h5 class="card-title">Title: {{property.title}}</h5>
-                <p class="card-text">Description: {{property.description}}</p>
-                <p class="card-text">Max Pax: {{property.max_pax}}</p>
-            </div>
-             <div class="col-6">
-                <p class="text-right">Address: {{property.address}}</p>
-                <p class="text-right">City: {{property.city}}</p>
-                <p class="text-right">Daily Price: {{property.daily_price}}</p>
-            </div>
-            </div>
-        </div>
-    </section>
-    <aside class="property-aside">
-      <label class="font-weight-bold"> Make a reservation!</label>
-      <form method='POST'>
-        {% csrf_token %}
-
-        <div class="form-group">
-          {{ reservationForm.name }}
-        </div>
-        <div class="form-group">
-          {{ reservationForm.surname }}
-        </div>
-        <div class="form-group">
-          {{ reservationForm.email }}
-        </div>
-        <div class="form-group">
-        {{ reservationForm.start_date }}
-        </div>
-        <div class="form-group">
-        {{ reservationForm.end_date }}
-        </div>
-
-        <button type="submit" class="btn btn-primary font-weight-bold">Make the reservation!</button>
-      </form>
-
-      <div class="property-error-section">
-        {% if reservationForm.errors %}
-          {% for field in reservationForm %}
-            {% for error in field.errors %}
-              <div class="alert alert-danger custom-error">
-                <strong>{{ error|escape }}</strong>
+<form method='POST'>
+  {% csrf_token %}
+  <div class="section-container">
+      <section class="property-section">
+          <div class="card mb-3">
+            <img src="{{property.image}}" class="card-img-top" alt="...">
+            <div class="card-body row">
+              <div class="col-6">
+                  <h5 class="card-title">Title: {{property.title}}</h5>
+                  <p class="card-text">Description: {{property.description}}</p>
+                  <p class="card-text">Max Pax: {{property.max_pax}}</p>
               </div>
-            {% endfor %}
-          {% endfor %}
-          {% for error in reservationForm.non_field_errors %}
-            <div class="alert alert-danger">
-              <strong>{{ error|escape }}</strong>
-            </div>
-          {% endfor %}
-        {% endif %}
-      </div>
-    </aside>
-</div>
-<div>
+              <div class="col-6">
+                  <p class="text-right">Address: {{property.address}}</p>
+                  <p class="text-right">City: {{property.city}}</p>
+                  <p class="text-right">Daily Price: {{property.daily_price}}</p>
+              </div>
+              </div>
+          </div>
+      </section>
+      <aside class="property-aside">
+        <label class="font-weight-bold"> Make a reservation!</label>
+
+          <div class="form-group">
+            {{ reservationForm.name }}
+          </div>
+          <div class="form-group">
+            {{ reservationForm.surname }}
+          </div>
+          <div class="form-group">
+            {{ reservationForm.email }}
+          </div>
+          <div class="form-group">
+          {{ reservationForm.start_date }}
+          </div>
+          <div class="form-group">
+          {{ reservationForm.end_date }}
+          </div>
+
+          <button type="submit" class="btn btn-primary font-weight-bold">Make the reservation!</button>
+
+          <div class="property-error-section">
+            {% if reservationForm.errors %}
+              {% for field in reservationForm %}
+                {% for error in field.errors %}
+                  <div class="alert alert-danger custom-error">
+                    <strong>{{ error|escape }}</strong>
+                  </div>
+                {% endfor %}
+              {% endfor %}
+              {% for error in reservationForm.non_field_errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+              {% endfor %}
+    
+            {% endif %}
+          </div>
+      </aside>
+  </div>
+
+  <div>
+    <h4> <b> Available days </b> </h4>
+  </div>
   {% for rentableDay in rentableDays %}
-    <p> {{ rentableDay.date }} </p>
+    
+    {% if forloop.counter|modulo:6 == 1 %}
+      <div class="row">
+    {% endif %}
+    
+    <div class="col-2">
+      {% if rentableDay.reservation %}
+        <div class="alert alert-danger">
+          <input type="checkbox" enabled="false" name="chosenDays" value="{{ rentableDay.pk }}"> {{ rentableDay.date }} <br>
+        </div>
+      {% else %}
+        <div class="alert alert-success">
+          <input type="checkbox" name="chosenDays" value="{{ rentableDay.pk }}"> {{ rentableDay.date }} <br>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if forloop.last or forloop.counter|modulo:6 == 0 %}
+      </div>
+    {% endif %}
+
   {% endfor %}
-</div>
+
+</form>
 
 </body>
 </html>

@@ -21,9 +21,3 @@ class ReservationForm(forms.Form):
         widget=forms.TextInput(
             attrs={'placeholder': 'E-mail', 
                 'class' : 'form-control font-weight-bold'}))
-    start_date = forms.DateField(
-        widget=DatePickerInput(options=datePickerOptions).start_of('event days')
-    )
-    end_date = forms.DateField(
-        widget=DatePickerInput(options=datePickerOptions).end_of('event days')
-    )
