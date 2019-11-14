@@ -26,4 +26,4 @@ class ReservationForm(forms.Form):
                 'class' : 'form-control font-weight-bold'}))
 
 class CityForm (forms.Form):
-    city = forms.ModelChoiceField(queryset=City.objects.all(), empty_label="(Choose a city)")
+    city = forms.ModelChoiceField(label=(''), queryset=City.objects.all(), empty_label="Choose a city")
