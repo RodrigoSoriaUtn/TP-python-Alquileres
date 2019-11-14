@@ -2,16 +2,22 @@ import datetime
 from django.http import Http404
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.template import loader
-from .forms import ReservationForm
+from .forms import ReservationForm, CityForm
 from .models import Property, Reservation, RentalDate
 
 # Create your views here.
 
 def index(request):
     property_list = Property.objects.all()
+    city_form = CityForm()
+    if (request.method == 'POST'):
+        city_form = CityForm(request.POST)
+        if request.POST['city'] :
+            property_list = Property.objects.filter(city=request.POST['city'])
     template = loader.get_template('alquileres/index.html')
     context = {
-        'property_list' : property_list
+        'property_list' : property_list,
+        'city_form': city_form
     }
     return HttpResponse(template.render(context, request))
 

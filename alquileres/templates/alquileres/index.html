@@ -42,8 +42,14 @@
 {% endfor %}
 </ul>
 
-  <ul class="col" style="width:50%;">
-    <h1 style="color: white; font-weight: bold;background-color: rgba(1,1,1,0.5); border-radius: 10px; padding: 5px; margin: 5px;">Go on vacation, <br> you've worked enough!</h1>
+  <ul class="col" style="width:50%; color: white; font-weight: bold;background-color: rgba(1,1,1,0.5); border-radius: 10px; padding: 10px; margin-bottom:30px;">
+    <h1 style="">Go on vacation, <br> you've worked enough!</h1>
+    <form method='POST'>
+      {% csrf_token %}
+      {{ city_form }}
+      <button type="submit" class="btn btn-primary font-weight-bold">Choose a city</button>
+
+    </form>
   </ul>
   </div>
 {% endblock %}
