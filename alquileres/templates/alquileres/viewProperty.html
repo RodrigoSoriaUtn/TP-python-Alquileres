@@ -16,8 +16,8 @@
   {% csrf_token %}
 
   <div class="row">
-    <section class="col-6 RS-card-box">
-      <img src="{{property.image}}" class="card-img-top" alt="...">
+    <section class=" col-6 RS-card-box " style="margin-top: 5px; border-radius: 10px;">
+      <img src="{{property.image}}" class="card-img-top" style="border-radius: 10px;">
       <div class="RS-container">
         <h4 class="RS-text-center"> <b> Available days </b> </h4>
       
@@ -48,7 +48,7 @@
 
     <section class="col-6" >
 
-      <aside>
+      <aside style="background-color: rgba(1,1,1,0.5); border-radius: 10px; padding: 5px; margin: 5px;">
         <h4 style="color: white;"> <b> {{property.title}} </b> </h4>
         <p style="color: white;"> {{property.description}}</p>
         <p style="color: white;"> <b> Max pax: </b> {{property.max_pax}}</p>
@@ -92,7 +92,7 @@
               {% endfor %}
               {% elif request.POST %}
                 <div class="alert alert-success">
-                  <strong>Property rented!</strong>
+                  <strong>Property rented! {{reservation.pk}} </strong>
                 </div>
 
             {% endif %}

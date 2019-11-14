@@ -47,7 +47,6 @@ def makeReservation(request, reservationForm, prop) :
     name = reservationForm.cleaned_data["name"]
     surname = reservationForm.cleaned_data['surname']
     email = reservationForm.cleaned_data['email']
-    reservationForm._clean_fields()
     if ( not request.POST.getlist('chosenDays') ) :
         raise Exception('You must choose at least one day to reserve ') 
     
