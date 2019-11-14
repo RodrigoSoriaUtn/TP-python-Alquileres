@@ -8,7 +8,7 @@
 {% extends "alquileres/navBar.html" %}
 
 {% block content %}
-<h3 class="font-weight-bold text-center" style="color: white; width: 50%; "> Properties for rent :  </h3>
+<h3 class="font-weight-bold text-left" style="color: white; padding-left: 15px; "> Properties for rent :  </h3>
 
 <div style="display: flex; ">
   <ul class="col" style="width:50%;">
@@ -29,7 +29,11 @@
         <div class="col-5">
           <p class="text-right">Max Pax: {{property.max_pax}}</p>
           <p class="text-right">City: {{property.city}}</p>
-           <p class="text-right" ><a href="/property/{{ property.id }}/">View Property</a></p>
+          <p class="text-right" >
+            <a  href="/property/{{ property.id }}/">
+              <button type="button" class="btn btn-primary font-weight-bold">View Property</button>
+            </a>
+          </p>
         </div>
       </div>
     </div>
