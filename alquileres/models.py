@@ -42,6 +42,10 @@ class Reservation(models.Model):
     total_price = models.DecimalField(max_digits=13, decimal_places=2)
     created_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.created_date.strftime('%d/%m/%Y')
+    
+
 class RentalDate(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, null=True)
