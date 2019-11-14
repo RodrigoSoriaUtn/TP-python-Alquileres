@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from .models import Reservation, City, Property, RentalDate, Host
 
-admin.site.register({City, Host})
+admin.site.register({Host})
 
 class RentalDateInline(admin.TabularInline) :
     model = RentalDate
@@ -57,3 +57,11 @@ class hostReservation(admin.ModelAdmin) :
             return Reservation.objects.all()
 
 admin.site.register(Reservation, hostReservation)
+
+class hostCities(admin.ModelAdmin) : 
+
+    search_fields = ['iata', 'name']
+
+    list_display = ['iata', 'name']
+
+admin.site.register(City, hostCities)
