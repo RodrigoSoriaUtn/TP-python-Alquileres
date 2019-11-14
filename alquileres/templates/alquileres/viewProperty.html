@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/alquileres/styles.css">
+      <link rel="stylesheet" href="/static/alquileres/styles.css">
     <title>View Property</title>
 </head>
 <body>
@@ -49,15 +49,14 @@
     <section class="col-6" >
 
       <aside>
-        <h4> <b> {{property.title}} </b> </h4>
-        <p> {{property.description}}</p>
-        <p> <b> Max pax: </b> {{property.max_pax}}</p>
-        <p> <b> Address: </b> {{property.address}}</p>
-        <p> <b> City: </b> {{property.city}}</p>
-        <p> <b> Daily price: </b> {{property.daily_price}}</p>
+        <h4 style="color: white;"> <b> {{property.title}} </b> </h4>
+        <p style="color: white;"> {{property.description}}</p>
+        <p style="color: white;"> <b> Max pax: </b> {{property.max_pax}}</p>
+        <p style="color: white;"> <b> Address: </b> {{property.address}}</p>
+        <p style="color: white;"> <b> City: </b> {{property.city}}</p>
+        <p style="color: white;"> <b> Daily price: </b> {{property.daily_price}}</p>
 
         <div>
-          <label class="font-weight-bold"> Make a reservation!</label>
 
           <div class="form-group">
             {{ reservationForm.name }}
