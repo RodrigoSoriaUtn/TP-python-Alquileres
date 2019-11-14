@@ -3,48 +3,110 @@
 <head>
     <meta charset="UTF-8">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/alquileres/styles.css">
+      <link rel="stylesheet" href="/static/alquileres/styles.css">
     <title>View Property</title>
 </head>
 <body>
 {% extends "alquileres/navBar.html" %}
 
 {% block content %}
-<div class="section-container">
-    <section class="property-section">
-        <div class="card mb-3">
-          <img src="{{property.image}}" class="card-img-top" alt="...">
-          <div class="card-body row">
-            <div class="col-6">
-                <h5 class="card-title">Title: {{property.title}}</h5>
-                <p class="card-text">Description: {{property.description}}</p>
-                <p class="card-text">Max Pax: {{property.max_pax}}</p>
-            </div>
-             <div class="col-6">
-                <p class="text-right">Address: {{property.address}}</p>
-                <p class="text-right">City: {{property.city}}</p>
-                <p class="text-right">Daily Price: {{property.daily_price}}</p>
-            </div>
-            </div>
-        </div>
-    </section>
-    <aside class="property-aside">
-        <form>
-            <label class=" font-weight-bold"> Make a reservation!</label>
-          <div class="form-group">
-            <input type="email" class="form-control font-weight-bold" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          </div>
-            <div class="form-group">
-            <input type="text" class="form-control font-weight-bold" id="exampleInputName1" placeholder="Name">
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control font-weight-bold" id="exampleInputPassword1" placeholder="Password">
+{% load my_tags %}
+{{ reservationForm.media }} {# Adds date-picker required JS and CSS of the reservation forms #}
+<form method='POST' class="RS-container">
+  {% csrf_token %}
+
+  <div class="row">
+    <section class=" col-6 RS-card-box " style="margin-top: 5px; border-radius: 10px;">
+      <img src="{{property.image}}" class="card-img-top" style="border-radius: 10px;">
+      <div class="RS-container">
+        <h4 class="RS-text-center"> <b> Available days </b> </h4>
+      
+        {% for rentableDay in rentableDays %}
+          
+          {% if forloop.counter|modulo:4 == 1 %}
+            <div class="row">
+          {% endif %}
+          
+          <div class="col-3">
+            {% if rentableDay.reservation %}
+              <div class="alert alert-danger">
+                <input type="checkbox" enabled="false" name="chosenDays" value="{{ rentableDay.pk }}"> {{ rentableDay }} <br>
+              </div>
+            {% else %}
+              <div class="alert alert-success">
+                <input type="checkbox" name="chosenDays" value="{{ rentableDay.pk }}"> {{ rentableDay }} <br>
+              </div>
+            {% endif %}
           </div>
 
-          <button type="submit" class="btn btn-primary font-weight-bold">Rent</button>
-        </form>
-    </aside>
-</div>
+          {% if forloop.last or forloop.counter|modulo:4 == 0 %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="col-6" >
+
+      <aside style="background-color: rgba(1,1,1,0.5); border-radius: 10px; padding: 5px; margin: 5px;">
+        <h4 style="color: white;"> <b> {{property.title}} </b> </h4>
+        <p style="color: white;"> {{property.description}}</p>
+        <p style="color: white;"> <b> Max pax: </b> {{property.max_pax}}</p>
+        <p style="color: white;"> <b> Address: </b> {{property.address}}</p>
+        <p style="color: white;"> <b> City: </b> {{property.city}}</p>
+        <p style="color: white;"> <b> Daily price: </b> {{property.daily_price}}</p>
+
+        <div>
+
+          <div class="form-group">
+            {{ reservationForm.name }}
+          </div>
+          <div class="form-group">
+            {{ reservationForm.surname }}
+          </div>
+          <div class="form-group">
+            {{ reservationForm.email }}
+          </div>
+          <div class="form-group">
+          {{ reservationForm.start_date }}
+          </div>
+          <div class="form-group">
+          {{ reservationForm.end_date }}
+          </div>
+
+          <button type="submit" class="btn btn-primary font-weight-bold">Make the reservation!</button>
+
+          <div class="property-error-section">
+            {% if reservationForm.errors %}
+              {% for field in reservationForm %}
+                {% for error in field.errors %}
+                  <div class="alert alert-danger custom-error">
+                    <strong>{{ error|escape }}</strong>
+                  </div>
+                {% endfor %}
+              {% endfor %}
+              {% for error in reservationForm.non_field_errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+              {% endfor %}
+              {% elif request.POST %}
+                <div class="alert alert-success">
+                  <strong>Property rented! {{reservation.pk}} </strong>
+                </div>
+
+            {% endif %}
+
+          </div>
+        </div>
+        
+      </aside>
+
+    </section>
+  </div>
+
+</form>
+
 </body>
 </html>
 {% endblock %}

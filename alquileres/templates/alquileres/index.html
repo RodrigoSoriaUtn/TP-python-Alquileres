@@ -1,18 +1,23 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/alquileres/styles.css">
   <title>Rentals</title>
 </head>
+
+<body>
 {% extends "alquileres/navBar.html" %}
 
 {% block content %}
-<ul>
-<h3 class="font-weight-bold"> Propiedades para alquilar :  </h3>
+<h3 class="font-weight-bold text-center" style="color: white; width: 50%; "> Properties for rent :  </h3>
+
+<div style="display: flex; ">
+  <ul class="col" style="width:50%;">
         {% for property in property_list %}
 
-    <div class="card mb-3" style="max-width: 540px;">
+    <div class="card mb-3" >
   <div class="row no-gutters">
     <div class="col-md-4" >
-      <img src="{{property.image}}" class="card-img" alt="..." height="150">
+      <img src="{{property.image}}" class="card-img col-md-12" height="150" style="width: 300px;">
     </div>
     <div class="col-md-8">
       <div class="card-body row">
@@ -21,7 +26,7 @@
         <p class="card-text">Description: {{property.description}}</p>
         <p class="card-text">Address: {{property.address}}</p>
         </div>
-        <div class="col-6">
+        <div class="col-5">
           <p class="text-right">Max Pax: {{property.max_pax}}</p>
           <p class="text-right">City: {{property.city}}</p>
            <p class="text-right" ><a href="/property/{{ property.id }}/">View Property</a></p>
@@ -32,4 +37,10 @@
 </div>
 {% endfor %}
 </ul>
+
+  <ul class="col" style="width:50%;">
+    <h1 style="color: white; font-weight: bold;background-color: rgba(1,1,1,0.5); border-radius: 10px; padding: 5px; margin: 5px;">Go on vacation, <br> you've worked enough!</h1>
+  </ul>
+  </div>
 {% endblock %}
+</body>

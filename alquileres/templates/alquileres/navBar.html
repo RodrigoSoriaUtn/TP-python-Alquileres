@@ -1,4 +1,9 @@
-<header><nav class="row navbar navbar-expand-lg navbar-dark bg-dark">
+<header>
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<nav class="row navbar navbar-expand-lg navbar-dark bg-dark" style="width:100%; margin:0px;">
   <a class=" col-9 navbar-brand font-weight-bold" href="../../">Rentals</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

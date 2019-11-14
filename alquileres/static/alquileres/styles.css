@@ -1,12 +1,24 @@
-.section-container {
-    display: flex;
+.RS-container {
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
-.property-section {
-    width: 50%;
-
+.property-error-section {
+    margin-top: 1em;
 }
-.property-aside {
-    width: 40%;
-    padding: 20px;
+
+.RS-card-box {
+    padding: 0px 0px 0px 0px;
+    box-shadow: 2px 2px 8px rgba(0,0,0, 0.4);
+    background-color: white;
+}
+.custom-section {
+}
+body {
+    background-image: url("https://www.diariovivo.com/wp-content/uploads/2019/07/29.6_confines_del_mundo-1.jpg");
+    background-size: cover;
+}
+.RS-text-center {
+    width: 100%;
+    text-align: center;
 }

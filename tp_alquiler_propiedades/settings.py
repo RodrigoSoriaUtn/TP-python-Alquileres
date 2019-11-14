@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap_datepicker_plus',
+    'bootstrap3',
+    'bootstrap_datepicker_plus'
 ]
 
 
@@ -118,3 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+BOOTSTRAP3 = {
+    'javascript_in_head': True,
+    'include_jquery': True,
+}
