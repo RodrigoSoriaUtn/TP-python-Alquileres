@@ -90,8 +90,13 @@
                   <strong>{{ error|escape }}</strong>
                 </div>
               {% endfor %}
-    
+              {% elif request.POST %}
+                <div class="alert alert-success">
+                  <strong>Property rented!</strong>
+                </div>
+
             {% endif %}
+
           </div>
         </div>
         

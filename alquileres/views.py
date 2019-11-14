@@ -24,7 +24,8 @@ def viewProperty(request, property_id):
 
             if reservationForm.is_valid() :
                 reservation = makeReservation(request, reservationForm, prop)
-                return loadPropertyView(request, prop, reservation.pk)
+                reservationForm = ReservationForm()
+                return loadPropertyView(request, prop, reservationForm, reservation.pk)
 
     except Exception as inst :
        reservationForm.add_error(None, inst)
@@ -43,11 +44,10 @@ def loadPropertyView(request, prop, resForm, reservationID=None) :
 
 def makeReservation(request, reservationForm, prop) :
         
-    name = reservationForm.cleaned_data['name']
+    name = reservationForm.cleaned_data["name"]
     surname = reservationForm.cleaned_data['surname']
     email = reservationForm.cleaned_data['email']
-    
-   
+    reservationForm._clean_fields()
     if ( not request.POST.getlist('chosenDays') ) :
         raise Exception('You must choose at least one day to reserve ') 
     
@@ -66,7 +66,7 @@ def makeReservation(request, reservationForm, prop) :
     for rentalDate in rentalDates :
         rentalDate.reservation = reservation
         rentalDate.save()
-    
+
     return reservation
 
 def validateRentalDates(rentalDates) :
