@@ -37,6 +37,9 @@ admin.site.register(Property, hostProperty)
 class hostReservation(admin.ModelAdmin) :
 
     def get_queryset(self, request) :
-        return Reservation.objects.filter(rentaldate__property__host=request.user)
+        if (not request.user.is_superuser) :
+            return Reservation.objects.filter(rentaldate__property__host=request.user)
+        else :
+            return Reservation.objects.all()
 
 admin.site.register(Reservation, hostReservation)
