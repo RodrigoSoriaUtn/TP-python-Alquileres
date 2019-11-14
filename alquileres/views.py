@@ -72,4 +72,4 @@ def makeReservation(request, reservationForm, prop) :
 def validateRentalDates(rentalDates) :
     for rentalDate in rentalDates :
         if rentalDate.reservation :
-            raise Exception('The dates selected are not available, please choose others ') 
+            raise Exception('The dates selected are not available, please choose others ')

@@ -12,16 +12,43 @@
 {% block content %}
 {% load my_tags %}
 {{ reservationForm.media }} {# Adds date-picker required JS and CSS of the reservation forms #}
-<form method='POST'>
+<form method='POST' class="RS-container">
   {% csrf_token %}
 
-  <div class="section-container">
-      <section class="property-section">
-          <div class="card mb-3">
-            <img src="{{property.image}}" class="card-img-top" alt="...">
+  <div class="row">
+    <section class="col-6 RS-card-box">
+      <img src="{{property.image}}" class="card-img-top" alt="...">
+      <div class="RS-container">
+        <h4 class="RS-text-center"> <b> Available days </b> </h4>
+      
+        {% for rentableDay in rentableDays %}
+          
+          {% if forloop.counter|modulo:4 == 1 %}
+            <div class="row">
+          {% endif %}
+          
+          <div class="col-3">
+            {% if rentableDay.reservation %}
+              <div class="alert alert-danger">
+                <input type="checkbox" enabled="false" name="chosenDays" value="{{ rentableDay.pk }}"> {{ rentableDay }} <br>
+              </div>
+            {% else %}
+              <div class="alert alert-success">
+                <input type="checkbox" name="chosenDays" value="{{ rentableDay.pk }}"> {{ rentableDay }} <br>
+              </div>
+            {% endif %}
           </div>
-      </section>
-      <aside class="property-aside">
+
+          {% if forloop.last or forloop.counter|modulo:4 == 0 %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="col-6" >
+
+      <aside>
         <h4> <b> {{property.title}} </b> </h4>
         <p> {{property.description}}</p>
         <p> <b> Max pax: </b> {{property.max_pax}}</p>
@@ -29,7 +56,8 @@
         <p> <b> City: </b> {{property.city}}</p>
         <p> <b> Daily price: </b> {{property.daily_price}}</p>
 
-        <label class="font-weight-bold"> Make a reservation!</label>
+        <div>
+          <label class="font-weight-bold"> Make a reservation!</label>
 
           <div class="form-group">
             {{ reservationForm.name }}
@@ -66,35 +94,12 @@
     
             {% endif %}
           </div>
+        </div>
+        
       </aside>
+
+    </section>
   </div>
-
-  <div>
-    <h4> <b> Available days </b> </h4>
-  </div>
-  {% for rentableDay in rentableDays %}
-    
-    {% if forloop.counter|modulo:6 == 1 %}
-      <div class="row">
-    {% endif %}
-    
-    <div class="col-2">
-      {% if rentableDay.reservation %}
-        <div class="alert alert-danger">
-          <input type="checkbox" enabled="false" name="chosenDays" value="{{ rentableDay.pk }}"> {{ rentableDay.date }} <br>
-        </div>
-      {% else %}
-        <div class="alert alert-success">
-          <input type="checkbox" name="chosenDays" value="{{ rentableDay.pk }}"> {{ rentableDay.date }} <br>
-        </div>
-      {% endif %}
-    </div>
-
-    {% if forloop.last or forloop.counter|modulo:6 == 0 %}
-      </div>
-    {% endif %}
-
-  {% endfor %}
 
 </form>
 

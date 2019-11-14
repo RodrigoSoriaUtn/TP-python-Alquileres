@@ -1,16 +1,18 @@
-.section-container {
-    display: flex;
-}
-
-.property-section {
-    width: 50%;
-}
-
-.property-aside {
-    width: 40%;
-    padding: 20px;
+.RS-container {
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 .property-error-section {
     margin-top: 1em;
+}
+
+.RS-card-box {
+    padding: 0px 0px 0px 0px;
+    box-shadow: 2px 2px 8px rgba(0,0,0, 0.4);
+}
+
+.RS-text-center {
+    width: 100%;
+    text-align: center;
 }
