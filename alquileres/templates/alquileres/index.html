@@ -8,7 +8,8 @@
 {% extends "alquileres/navBar.html" %}
 
 {% block content %}
-<ul>
+<div style="display: flex;">
+<ul class="col" style="width:50%;">
 <h3 class="font-weight-bold " style="color: white;"> Propiedades para alquilar :  </h3>
         {% for property in property_list %}
 
@@ -35,5 +36,10 @@
 </div>
 {% endfor %}
 </ul>
+
+  <ul class="col" style="width:50%;">
+    <h1 style="color: white; font-weight: bold;">Take a holidays, <br> you've worked enough</h1>
+  </ul>
+  </div>
 {% endblock %}
 </body>
