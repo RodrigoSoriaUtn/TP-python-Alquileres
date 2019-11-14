@@ -15,6 +15,10 @@ class hostProperty(admin.ModelAdmin) :
         RentalDateInline
     ]
 
+    search_fields = ['title']
+    list_display = ['title', 'city', 'daily_price']
+    list_filter = ['city__name']
+
     def get_exclude(self, request, obj) :
         if (not request.user.is_superuser) :
             return ['host'] 
@@ -34,7 +38,17 @@ class hostProperty(admin.ModelAdmin) :
 
 admin.site.register(Property, hostProperty)
 
+class RentalDateInlineReservation(admin.TabularInline) :
+    model = RentalDate
+
 class hostReservation(admin.ModelAdmin) :
+
+    inlines = [
+        RentalDateInlineReservation
+    ]
+
+    list_display = ['email', 'created_date', 'total_price']
+    list_filter = ['rentaldate__property']
 
     def get_queryset(self, request) :
         if (not request.user.is_superuser) :
