@@ -39,15 +39,8 @@ class Reservation(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
-    total_price = models.DecimalField(max_digits=3, decimal_places=2)
+    total_price = models.DecimalField(max_digits=13, decimal_places=2)
     created_date = models.DateTimeField(auto_now_add=True)
-
-    def __init__(self, name, surname, email, creation_date, total_cost) : 
-        self.name = name
-        self.surname = surname
-        self.email = email 
-        self.created_date = creation_date
-        self.total_price = total_cost
 
 class RentalDate(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)

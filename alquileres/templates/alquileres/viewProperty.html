@@ -14,25 +14,21 @@
 {{ reservationForm.media }} {# Adds date-picker required JS and CSS of the reservation forms #}
 <form method='POST'>
   {% csrf_token %}
+
   <div class="section-container">
       <section class="property-section">
           <div class="card mb-3">
             <img src="{{property.image}}" class="card-img-top" alt="...">
-            <div class="card-body row">
-              <div class="col-6">
-                  <h5 class="card-title">Title: {{property.title}}</h5>
-                  <p class="card-text">Description: {{property.description}}</p>
-                  <p class="card-text">Max Pax: {{property.max_pax}}</p>
-              </div>
-              <div class="col-6">
-                  <p class="text-right">Address: {{property.address}}</p>
-                  <p class="text-right">City: {{property.city}}</p>
-                  <p class="text-right">Daily Price: {{property.daily_price}}</p>
-              </div>
-              </div>
           </div>
       </section>
       <aside class="property-aside">
+        <h4> <b> {{property.title}} </b> </h4>
+        <p> {{property.description}}</p>
+        <p> <b> Max pax: </b> {{property.max_pax}}</p>
+        <p> <b> Address: </b> {{property.address}}</p>
+        <p> <b> City: </b> {{property.city}}</p>
+        <p> <b> Daily price: </b> {{property.daily_price}}</p>
+
         <label class="font-weight-bold"> Make a reservation!</label>
 
           <div class="form-group">

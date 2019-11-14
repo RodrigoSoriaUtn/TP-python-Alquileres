@@ -17,17 +17,17 @@ def index(request):
 
 def viewProperty(request, property_id):
     reservationForm = ReservationForm()
-    #try:
-    prop = get_object_or_404(Property, pk=property_id)
-    if (request.method == 'POST') :
-        reservationForm = ReservationForm(request.POST)
+    try:
+        prop = get_object_or_404(Property, pk=property_id)
+        if (request.method == 'POST') :
+            reservationForm = ReservationForm(request.POST)
 
-        if reservationForm.is_valid() :
-            reservation = makeReservation(reservationForm, prop)
-            return loadPropertyView(request, prop, reservation.pk)
+            if reservationForm.is_valid() :
+                reservation = makeReservation(request, reservationForm, prop)
+                return loadPropertyView(request, prop, reservation.pk)
 
-    #except Exception as inst :
-    #   reservationForm.add_error(None, inst)
+    except Exception as inst :
+       reservationForm.add_error(None, inst)
 
     return loadPropertyView(request, prop, reservationForm)
 
@@ -41,17 +41,26 @@ def loadPropertyView(request, prop, resForm, reservationID=None) :
     }
     return render(request, 'alquileres/viewProperty.html', context)
 
-def makeReservation(reservationForm, prop) :
+def makeReservation(request, reservationForm, prop) :
         
     name = reservationForm.cleaned_data['name']
     surname = reservationForm.cleaned_data['surname']
     email = reservationForm.cleaned_data['email']
     
    
-    if ( (len(delta.days) + 1) > len(rentalDates) ) :
-        raise Exception('The dates selected are not available, you can choose the following dates : ') 
+    if ( not request.POST.getlist('chosenDays') ) :
+        raise Exception('You must choose at least one day to reserve ') 
+    
+    rentalDates = RentalDate.objects.filter(pk__in=request.POST.getlist('chosenDays'))
+    validateRentalDates(rentalDates)
 
-    reservation = Reservation(name, surname, email, datetime.date.today, prop.daily_price * rentalDates.len())
+    reservation = Reservation()
+    reservation.name = name
+    reservation.surname = surname
+    reservation.email = email
+    reservation.created_date = datetime.date.today 
+    total = prop.daily_price * rentalDates.count()
+    reservation.total_price = total
     reservation.save()
 
     for rentalDate in rentalDates :
@@ -59,3 +68,8 @@ def makeReservation(reservationForm, prop) :
         rentalDate.save()
     
     return reservation
+
+def validateRentalDates(rentalDates) :
+    for rentalDate in rentalDates :
+        if rentalDate.reservation :
+            raise Exception('The dates selected are not available, please choose others ') 
