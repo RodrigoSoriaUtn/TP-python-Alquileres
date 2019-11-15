@@ -12,6 +12,7 @@
    Instalation :
    
     git clone https://github.com/RodrigoSoriaUtn/TP-python-Rental.git
+    cd TP-python-Rental
     pip install Django==2.2.7
     pip install django-bootstrap3
  
