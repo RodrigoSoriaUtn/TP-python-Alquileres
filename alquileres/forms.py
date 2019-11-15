@@ -1,16 +1,10 @@
 from django import forms
-from bootstrap_datepicker_plus import DatePickerInput
 import datetime
 
 from alquileres.models import City
 
 
 class ReservationForm(forms.Form):
-
-    datePickerOptions = {
-        'format': 'DD/MM/YYYY',
-        'minDate': datetime.datetime.today().strftime('%m/%d/%Y'),
-    }
 
     name = forms.CharField(label='', max_length=30,
         widget=forms.TextInput(
