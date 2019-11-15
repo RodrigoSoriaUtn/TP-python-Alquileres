@@ -1,5 +1,5 @@
 # Trabajo Practico Metodologia de Sistemas III
-![img](https://i.pinimg.com/originals/d9/70/36/d97036b366cf7dc60cebf3a4fee58463.png) ![img2](http://mareconversionpro.fr/wp-content/uploads/2017/05/bootstrap-logo-300x300.jpg)
+![img](https://i.pinimg.com/originals/d9/70/36/d97036b366cf7dc60cebf3a4fee58463.png) ![img2](http://mareconversionpro.fr/wp-content/uploads/2017/05/bootstrap-logo-300x300.jpg) ![](https://freepngimg.com/thumb/python_logo/7-2-python-logo-free-download-png-thumb.png)
 
 ## Members :
  - Marcos Davidovich
@@ -20,6 +20,12 @@
   
     py manage.py runserver
     
+  Users:
+  
+     Username   | Password  | Type
+     admin      | admin     | Super user
+     SrCobranza | 123456ab  | Host
+     HouseOwner | 123456ab  | Host
   Updating embedded db :
    
     py manage.py makemigrations
