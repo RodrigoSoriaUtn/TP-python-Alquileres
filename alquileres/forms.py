@@ -25,5 +25,9 @@ class ReservationForm(forms.Form):
             attrs={'placeholder': 'E-mail', 
                 'class' : 'form-control font-weight-bold'}))
 
-class CityForm (forms.Form):
-    city = forms.ModelChoiceField(label=(''), queryset=City.objects.all(), empty_label="Choose a city")
+class PropertyFilterForm (forms.Form):
+    city = forms.ModelChoiceField(required=False, label=(''), queryset=City.objects.all(), empty_label="Choose a city")
+    min_pax = forms.IntegerField(required=False, label=(''), widget=forms.NumberInput(
+        attrs={'placeholder': 'Min Pax',
+               'class': 'form-control font-weight-bold',
+               'style': 'width: 30%;'}))
